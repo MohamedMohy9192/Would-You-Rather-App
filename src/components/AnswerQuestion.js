@@ -32,7 +32,7 @@ class AnswerQestion extends Component {
     //fight out a way to update user answer's object inside users state slince in store
     // to update the answered quesitons list
     this.setState(() => ({
-      value,
+     answer: value,
     }));
   };
   render() {

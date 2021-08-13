@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import QuestionResult from './QuestionResult';
 import AnswerQuestion from './AnswerQuestion';
 import NewQuestion from './NewQuestion';
+import Nav from './Nav';
 
 class App extends Component {
   componentDidMount() {
@@ -21,11 +22,14 @@ class App extends Component {
       <BrowserRouter>
         <Fragment>
           <div>
+            <Nav/>
             {loading === true ? null : (
               <div>
                 <Route exact path='/' component={Dashboard} />
                 <Route exact path='/question/:id' component={QuestionResult} />
                 <Route exact path='/question/question/:id' component={AnswerQuestion} />
+                <Route path='/new' component={NewQuestion}/>
+                
               </div>
             )}
           </div>

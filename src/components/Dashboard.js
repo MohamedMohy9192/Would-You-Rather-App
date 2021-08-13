@@ -12,13 +12,13 @@ class Dashboard extends Component {
         <h2>Unanswered Questions</h2>
         <ul>
           {unAnsweredQuestionsIds.map((questionId) => (
-            <li key={questionId}> {<Question id={questionId}/>}</li>
+            <li key={questionId}> {<Question id={questionId} />}</li>
           ))}
         </ul>
         <h2>Answered Questions</h2>
         <ul>
           {answeredQuestionsIds.map((questionId) => (
-            <li key={questionId}>{<Question id={questionId}/>}</li>
+            <li key={questionId}>{<Question id={questionId} />}</li>
           ))}
         </ul>
       </div>
@@ -28,12 +28,21 @@ class Dashboard extends Component {
 
 function mapStateToProps({ users, questions, authedUser }) {
   const currentUser = users[authedUser];
-  const answeredQuestionsIds = Object.keys(currentUser.answers);
-  const allQuestionsIds = Object.keys(questions);
+  const answeredQuestionsIds = Object.keys(currentUser.answers).
+  sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
+  );
+
+
+
+  const allQuestionsIds = Object.keys(questions).sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
+  );
 
   const unAnsweredQuestionsIds = allQuestionsIds.filter(
     (questionId) => !answeredQuestionsIds.includes(questionId)
-  );
+
+  )
 
   return {
     unAnsweredQuestionsIds,

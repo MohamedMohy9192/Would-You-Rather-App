@@ -34,6 +34,7 @@ let users = {
   }
 }
 
+
 let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
@@ -195,7 +196,7 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           }
         }
       }
-
+      console.log('Users', users)
       res()
     }, 500)
   })

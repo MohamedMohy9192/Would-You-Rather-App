@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { handleSaveQuestionAnswer } from '../actions/questions';
 
 class AnswerQestion extends Component {
   state = {
@@ -8,7 +9,8 @@ class AnswerQestion extends Component {
 
   handleSumbit = (event) => {
     event.preventDefault();
-   
+
+    //redirect to QuestionResultComponent Passing the qid to display
   };
 
   handleChange = (event) => {
@@ -16,11 +18,13 @@ class AnswerQestion extends Component {
 
     const { value } = event.target;
 
+    const { dispatch, authedUser, question } = this.props;
+    //{ authedUser, qid, answer }
+    dispatch(handleSaveQuestionAnswer({ authedUser, qid: question.id, answer:value }));
+
     this.setState(() => ({
       value,
     }));
-
-    
   };
   render() {
     const { question, author, authedUser } = this.props;

@@ -1,6 +1,6 @@
 import { _saveQuestionAnswer, _saveQuestion, _getUsers } from '../utils/_DATA';
 import { receiveUsers } from './users';
-
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER';
 export const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
@@ -24,7 +24,7 @@ function saveQuestionAnswer({ authedUser, qid, answer }) {
 export function handleSaveQuestionAnswer(info) {
   return (dispatch) => {
     dispatch(saveQuestionAnswer(info));
-
+    dispatch(showLoading());
     return _saveQuestionAnswer(info)
       .then(() => {
         //Get the updated user answers after the authed user has answered a question
@@ -32,6 +32,7 @@ export function handleSaveQuestionAnswer(info) {
           dispatch(receiveUsers(users));
         });
       })
+      .then(() => dispatch(hideLoading()))
       .catch((e) => {
         console.warn('Error in handleToggleTweet: ', e);
         // unsave the answer if the reqest to the backend is failed
@@ -51,8 +52,11 @@ function saveNewQuesiton(question) {
 
 export function handleSaveNewQuestion(question) {
   return (dispatch) => {
-    return _saveQuestion(question).then((returnedQuestion) => {
-      dispatch(saveNewQuesiton(returnedQuestion));
-    });
+    dispatch(showLoading());
+    return _saveQuestion(question)
+      .then((returnedQuestion) => {
+        dispatch(saveNewQuesiton(returnedQuestion));
+      })
+      .then(() => dispatch(hideLoading()));
   };
 }

@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { handleInitialData } from '../actions/shared';
-
+import LoadingBar from 'react-redux-loading-bar';
+import NotFound from './NotFound'
 import Dashboard from './Dashboard';
 import QuestionResult from './QuestionResult';
 import AnswerQuestion from './AnswerQuestion';
 import NewQuestion from './NewQuestion';
+import Login from './Login'
 import Nav from './Nav';
 
 class App extends Component {
@@ -16,23 +18,34 @@ class App extends Component {
   }
   //<AnswerQuestion match={{params: {id: '6ni6ok3ym7mf1p33lnez'}}} />
   render() {
-    const { loading } = this.props;
+    const { loading, authedUser } = this.props;
 
     return (
       <BrowserRouter>
         <Fragment>
-          <div>
-            <Nav/>
-            {loading === true ? null : (
-              <div>
-                <Route exact path='/' component={Dashboard} />
-                <Route exact path='/question/:id' component={QuestionResult} />
-                <Route exact path='/question/question/:id' component={AnswerQuestion} />
-                <Route path='/new' component={NewQuestion}/>
-                
-              </div>
-            )}
-          </div>
+          <LoadingBar />
+          {loading === true ? null : (
+            <div>
+              <Nav />
+              {authedUser === 'Logout' ? <Login/> : (
+                <divq>
+                  <Route exact path='/' component={Dashboard} />
+                  <Route
+                    exact
+                    path='/question/:id'
+                    component={QuestionResult}
+                  />
+                  <Route
+                    exact
+                    path='/question/question/:id'
+                    component={AnswerQuestion}
+                  />
+                  <Route path='/new' component={NewQuestion} />
+                  <Route path='/NotFound' component={NotFound} />
+                </divq>
+              )}
+            </div>
+          )}
         </Fragment>
       </BrowserRouter>
     );
@@ -42,6 +55,7 @@ class App extends Component {
 function mapStateToProps({ authedUser }) {
   return {
     loading: authedUser === null,
+    authedUser,
   };
 }
 

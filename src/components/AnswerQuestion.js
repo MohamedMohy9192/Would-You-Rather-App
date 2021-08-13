@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleSaveQuestionAnswer } from '../actions/questions';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 class AnswerQestion extends Component {
   state = {
@@ -11,9 +11,9 @@ class AnswerQestion extends Component {
   handleSumbit = (event) => {
     event.preventDefault();
 
-    const {history, id } = this.props;
+    const { history, id } = this.props;
 
-    console.log('AnswerQestion', id)
+    console.log('AnswerQestion', id);
     //redirect to QuestionResultComponent Passing the qid to display
     history.push(`/question/${id}`);
   };
@@ -32,11 +32,15 @@ class AnswerQestion extends Component {
     //fight out a way to update user answer's object inside users state slince in store
     // to update the answered quesitons list
     this.setState(() => ({
-     answer: value,
+      answer: value,
     }));
   };
   render() {
     const { question, author, authedUser } = this.props;
+
+    if (question === null) {
+      return <Redirect to='/NotFound'></Redirect>;
+    }
     const { optionOne, optionTwo } = question;
     const { name, avatarURL } = author;
 
@@ -74,15 +78,15 @@ class AnswerQestion extends Component {
 function mapStateToProps({ users, questions, authedUser }, props) {
   const { id } = props.match.params;
 
-  console.log('id', id)
-  const question = questions[id];
-  const author = users[question.author];
+  const question = questions[id] ? questions[id] : null;
+  console.log('question', question);
+  const author = question ? users[question.author] : null;
 
   return {
     question,
     author,
     authedUser,
-    id
+    id,
   };
 }
 

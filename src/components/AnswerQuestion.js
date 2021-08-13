@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleSaveQuestionAnswer } from '../actions/questions';
+import { withRouter } from 'react-router-dom';
 
 class AnswerQestion extends Component {
   state = {
@@ -10,7 +11,11 @@ class AnswerQestion extends Component {
   handleSumbit = (event) => {
     event.preventDefault();
 
+    const {history, id } = this.props;
+
+    console.log('AnswerQestion', id)
     //redirect to QuestionResultComponent Passing the qid to display
+    history.push(`/question/${id}`);
   };
 
   handleChange = (event) => {
@@ -20,8 +25,12 @@ class AnswerQestion extends Component {
 
     const { dispatch, authedUser, question } = this.props;
     //{ authedUser, qid, answer }
-    dispatch(handleSaveQuestionAnswer({ authedUser, qid: question.id, answer:value }));
+    dispatch(
+      handleSaveQuestionAnswer({ authedUser, qid: question.id, answer: value })
+    );
 
+    //fight out a way to update user answer's object inside users state slince in store
+    // to update the answered quesitons list
     this.setState(() => ({
       value,
     }));
@@ -64,6 +73,8 @@ class AnswerQestion extends Component {
 
 function mapStateToProps({ users, questions, authedUser }, props) {
   const { id } = props.match.params;
+
+  console.log('id', id)
   const question = questions[id];
   const author = users[question.author];
 
@@ -71,7 +82,8 @@ function mapStateToProps({ users, questions, authedUser }, props) {
     question,
     author,
     authedUser,
+    id
   };
 }
 
-export default connect(mapStateToProps)(AnswerQestion);
+export default withRouter(connect(mapStateToProps)(AnswerQestion));

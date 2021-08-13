@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom'
 
 class Question extends Component {
   handleViewQuesiton = () => {
     //use react router to navigate to askQuestionComponent or QuestonResultComponent
-    const { question, authedUser } = this.props;
+    const { question, authedUser, history, id } = this.props;
     const { optionOne, optionTwo } = question;
 
     if (
@@ -13,9 +14,13 @@ class Question extends Component {
     ) {
       //redirect to QuestonResultComponent
       console.log('User Already Answered The Question')
+      history.push(`/question/${id}`)
+
     } else {
       //redirect to askQuestionComponent
-      console.log('User Did Not Answer The Question Yet')
+      console.log('User Did Not Answer The Question Yet', id)
+      history.push(`/question/question/${id}`)
+      
       
     }
   };
@@ -50,4 +55,4 @@ function mapStateToProps({ users, questions, authedUser }, { id }) {
   };
 }
 
-export default connect(mapStateToProps)(Question);
+export default withRouter(connect(mapStateToProps)(Question));

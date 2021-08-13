@@ -44,7 +44,6 @@ function saveNewQuesiton(question) {
 export function handleSaveNewQuestion(question) {
   return (dispatch) => {
     return _saveQuestion(question).then((returnedQuestion) => {
-      console.log('returnedQuestion', returnedQuestion)
       dispatch(saveNewQuesiton(returnedQuestion));
     });
   };

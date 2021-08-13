@@ -19,6 +19,8 @@ class AnswerQestion extends Component {
     this.setState(() => ({
       value,
     }));
+
+    
   };
   render() {
     const { question, author, authedUser } = this.props;
@@ -36,7 +38,7 @@ class AnswerQestion extends Component {
               type='radio'
               id='option-one'
               name='would-you-rather'
-              value={optionOne.text}
+              value='optionOne'
               onChange={this.handleChange}
             />
             <label>{optionOne.text}</label>
@@ -44,7 +46,7 @@ class AnswerQestion extends Component {
               type='radio'
               id='option-two'
               name='would-you-rather'
-              value={optionTwo.text}
+              value='optionTwo'
               onChange={this.handleChange}
             />
             <label>{optionTwo.text}</label>

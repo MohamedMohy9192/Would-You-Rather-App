@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import CheckIcon from '@material-ui/icons/Check';
 
 class QuestionResult extends Component {
   render() {
@@ -16,9 +17,13 @@ class QuestionResult extends Component {
           <div>Result</div>
           <div>
             <div>
-              {optionOne.votes.includes(authedUser)
-                ? `${optionOne.text} ***`
-                : optionOne.text}
+              {optionOne.votes.includes(authedUser) ? (
+                <span>
+                  {optionOne.text} <CheckIcon />
+                </span>
+              ) : (
+                optionOne.text
+              )}
             </div>
             <span>{`${optionOne.votes.length} out of ${totalVotes}`}</span>
             <span style={{ marginLeft: '10px' }}>{`${
@@ -27,9 +32,13 @@ class QuestionResult extends Component {
           </div>
           <div>
             <div>
-              {optionTwo.votes.includes(authedUser)
-                ? `${optionTwo.text} ***`
-                : optionTwo.text}
+              {optionTwo.votes.includes(authedUser) ? (
+                <span>
+                  {optionTwo.text} <CheckIcon />
+                </span>
+              ) : (
+                optionTwo.text
+              )}
             </div>
             <span>{`${optionTwo.votes.length} out of ${totalVotes}`}</span>
             <span style={{ marginLeft: '10px' }}>{`${

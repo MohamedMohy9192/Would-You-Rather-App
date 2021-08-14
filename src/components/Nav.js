@@ -1,21 +1,62 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { DEFAULT_USER, setAuthedUser } from '../actions/authedUser';
 
-export default function Nav () {
+class Nav extends Component {
+  handleLogout = () => {
+    this.props.dispatch(setAuthedUser(DEFAULT_USER));
+  };
+
+  render() {
+    const { loggedUser, authedUser } = this.props;
+
     return (
-      <nav >
-        <ul>
-          <li>
-            <NavLink to='/' exact activeClassName='active'>
-              Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/new' activeClassName='active'>
-              New Question
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-    )
-  } 
+      <div>
+        <nav style={{ display: 'inline-block' }}>
+          <ul>
+            <li>
+              <NavLink to='/' exact activeClassName='active'>
+                Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='/new' activeClassName='active'>
+                New Question
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='' activeClassName='active'>
+                Leaderboard
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+
+        {loggedUser === null ? null : (
+          <div style={{ float: 'right', display: 'inline-block' }}>
+            <img
+              src={loggedUser.avatarURL}
+              alt={`Avatar of ${loggedUser.name}`}
+              className='avatar'
+            />
+            <p>Hello {loggedUser.name}</p>
+            <button type='button' onClick={this.handleLogout}>
+              Sign Out
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+function mapStateToProps({ users, authedUser }) {
+  const loggedUser = authedUser === DEFAULT_USER ? null : users[authedUser];
+
+  return {
+    loggedUser,
+    authedUser,
+  };
+}
+export default connect(mapStateToProps)(Nav);

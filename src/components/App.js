@@ -10,6 +10,7 @@ import AnswerQuestion from './AnswerQuestion';
 import NewQuestion from './NewQuestion';
 import Login from './Login'
 import Nav from './Nav';
+import { DEFAULT_USER } from '../actions/authedUser';
 
 class App extends Component {
   componentDidMount() {
@@ -27,7 +28,7 @@ class App extends Component {
           {loading === true ? null : (
             <div>
               <Nav />
-              {authedUser === 'Logout' ? <Login/> : (
+              {authedUser === DEFAULT_USER ? <Login/> : (
                 <div>
                   <Route exact path='/' component={Dashboard} />
                   <Route

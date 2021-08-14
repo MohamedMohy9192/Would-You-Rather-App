@@ -6,7 +6,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 //Set a default user Id
 
-const AUTHED_ID = 'tylermcginnis';
+const AUTHED_ID = 'Logout';
 
 export function handleInitialData() {
   return (dispatch) => {

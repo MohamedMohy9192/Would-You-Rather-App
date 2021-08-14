@@ -28,7 +28,7 @@ class App extends Component {
             <div>
               <Nav />
               {authedUser === 'Logout' ? <Login/> : (
-                <divq>
+                <div>
                   <Route exact path='/' component={Dashboard} />
                   <Route
                     exact
@@ -42,7 +42,7 @@ class App extends Component {
                   />
                   <Route path='/new' component={NewQuestion} />
                   <Route path='/NotFound' component={NotFound} />
-                </divq>
+                </div>
               )}
             </div>
           )}

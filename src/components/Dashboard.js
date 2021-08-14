@@ -11,8 +11,6 @@ class Dashboard extends Component {
     this.setState(() => ({
       tabName,
     }));
-
-    console.log('')
   };
 
   render() {
@@ -48,17 +46,20 @@ class Dashboard extends Component {
 
 function mapStateToProps({ users, questions, authedUser }) {
   const currentUser = users[authedUser];
+
+  console.log('currentUser', currentUser);
+  
   const answeredQuestionsIds = Object.keys(currentUser.answers).sort(
     (a, b) => questions[b].timestamp - questions[a].timestamp
   );
 
-  const allQuestionsIds = Object.keys(questions).sort(
-    (a, b) => questions[b].timestamp - questions[a].timestamp
-  );
+  console.log('answeredQuestionsIds', answeredQuestionsIds);
 
-  const unAnsweredQuestionsIds = allQuestionsIds.filter(
-    (questionId) => !answeredQuestionsIds.includes(questionId)
-  );
+  const allQuestionsIds = Object.keys(questions);
+
+  const unAnsweredQuestionsIds = allQuestionsIds
+    .filter((questionId) => !answeredQuestionsIds.includes(questionId))
+    .sort((a, b) => questions[b].timestamp - questions[a].timestamp);
 
   return {
     unAnsweredQuestionsIds,

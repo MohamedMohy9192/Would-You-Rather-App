@@ -11,23 +11,30 @@ class AnswerQestion extends Component {
   handleSumbit = (event) => {
     event.preventDefault();
 
-    const { history, id } = this.props;
+   
+    const { dispatch, authedUser, question ,history, id } = this.props;
 
-    console.log('AnswerQestion', id);
-    //redirect to QuestionResultComponent Passing the qid to display
-    history.push(`/question/${id}`);
+    const { answer } = this.state;
+
+    if (answer !== '') {
+      //{ authedUser, qid, answer }
+      dispatch(
+        handleSaveQuestionAnswer({ authedUser, qid: question.id, answer })
+      );
+
+      console.log('AnswerQestion', id);
+      this.setState(()=>({
+        answer: ''
+      }))
+      //redirect to QuestionResultComponent Passing the qid to display
+      history.push(`/question/${id}`);
+    }
   };
 
   handleChange = (event) => {
     console.log('sumbit value', event.target.value);
 
     const { value } = event.target;
-
-    const { dispatch, authedUser, question } = this.props;
-    //{ authedUser, qid, answer }
-    dispatch(
-      handleSaveQuestionAnswer({ authedUser, qid: question.id, answer: value })
-    );
 
     //fight out a way to update user answer's object inside users state slince in store
     // to update the answered quesitons list

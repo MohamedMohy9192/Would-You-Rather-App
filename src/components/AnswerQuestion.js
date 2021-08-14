@@ -43,7 +43,7 @@ class AnswerQestion extends Component {
     }));
   };
   render() {
-    const { question, author, authedUser } = this.props;
+    const { question, author} = this.props;
 
     if (question === null) {
       return <Redirect to='/NotFound'></Redirect>;

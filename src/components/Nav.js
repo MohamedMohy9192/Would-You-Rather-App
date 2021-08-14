@@ -9,7 +9,7 @@ class Nav extends Component {
   };
 
   render() {
-    const { loggedUser, authedUser } = this.props;
+    const { loggedUser } = this.props;
 
     return (
       <div>
@@ -26,7 +26,7 @@ class Nav extends Component {
               </NavLink>
             </li>
             <li>
-              <NavLink to='' activeClassName='active'>
+              <NavLink to='/Leaderboard' activeClassName='active'>
                 Leaderboard
               </NavLink>
             </li>
@@ -56,7 +56,7 @@ function mapStateToProps({ users, authedUser }) {
 
   return {
     loggedUser,
-    authedUser,
+    
   };
 }
 export default connect(mapStateToProps)(Nav);

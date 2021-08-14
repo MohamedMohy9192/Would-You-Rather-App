@@ -1,6 +1,6 @@
 import { _saveQuestionAnswer, _saveQuestion, _getUsers } from '../utils/_DATA';
 import { receiveUsers } from './users';
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER';
 export const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
@@ -56,6 +56,12 @@ export function handleSaveNewQuestion(question) {
     return _saveQuestion(question)
       .then((returnedQuestion) => {
         dispatch(saveNewQuesiton(returnedQuestion));
+      })
+      .then(() => {
+        //Get the updated user questions after the authed user has created  a new question
+        _getUsers().then((users) => {
+          dispatch(receiveUsers(users));
+        });
       })
       .then(() => dispatch(hideLoading()));
   };

@@ -1,6 +1,7 @@
+import 'semantic-ui-css/semantic.min.css'
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route} from 'react-router-dom';
 import { handleInitialData } from '../actions/shared';
 import LoadingBar from 'react-redux-loading-bar';
 import NotFound from './NotFound'
@@ -11,13 +12,14 @@ import NewQuestion from './NewQuestion';
 import Login from './Login'
 import Nav from './Nav';
 import { DEFAULT_USER } from '../actions/authedUser';
+import Leaderboard from './Leaderboard';
 
 class App extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(handleInitialData());
   }
-  //<AnswerQuestion match={{params: {id: '6ni6ok3ym7mf1p33lnez'}}} />
+ 
   render() {
     const { loading, authedUser } = this.props;
 
@@ -43,6 +45,7 @@ class App extends Component {
                   />
                   <Route path='/new' component={NewQuestion} />
                   <Route path='/NotFound' component={NotFound} />
+                  <Route path='/Leaderboard' component={Leaderboard} />
                 </div>
               )}
             </div>
